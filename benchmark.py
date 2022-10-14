@@ -1,21 +1,20 @@
 import csv
-from client import RestClient
+from client import RestClient, GrpcClient
 
 FLASK_PORT = 8000
 
 def benchmark():
-    rest_client = RestClient(8000)
+    flask_client = RestClient(8000, 'flask')
+    grpc_client = GrpcClient(8003)
 
     with open('benchmarks.csv', 'w') as csvfile:
         writer = csv.writer(csvfile)
-        iters_row = ['iters']
-        for i in range(1000):
-            iters_row.append(i)
 
         data = list(zip(
-            iters_row, 
-            rest_client.benchmark_simple_req(), 
-            rest_client.benchmark_complex_req()))
+            flask_client.benchmark_simple_req(), 
+            flask_client.benchmark_complex_req(),
+            grpc_client.benchmark_simple_req(),
+            grpc_client.benchmark_complex_req()))
 
         for row in data:
             writer.writerow(row)

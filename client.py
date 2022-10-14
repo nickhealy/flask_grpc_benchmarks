@@ -18,13 +18,14 @@ def get_latencies_after_x_iterations(name, cb, iterations):
         start = time.perf_counter()
         cb()
         end = time.perf_counter()
-        latencies.append(end - start)
+        latencies.append((end - start) * 1000) # convert to ms
 
     return latencies
 
 class RestClient:
-    def __init__(self, port):
+    def __init__(self, port, base_name):
         self.port = port
+        self.base_name = base_name
 
     def get_benchmarks(self, name, url, iterations):
         session = requests.Session()
@@ -33,10 +34,10 @@ class RestClient:
         return get_latencies_after_x_iterations(name, req, iterations)
 
     def benchmark_simple_req(self, iters = ITERATIONS):
-        return self.get_benchmarks("flask_simple", "/simple/", iters)
+        return self.get_benchmarks(f"{self.base_name}_simple", "/simple/", iters)
     
     def benchmark_complex_req(self, iters = ITERATIONS):
-        return self.get_benchmarks("flask_complex", "/complex/", iters)
+        return self.get_benchmarks(f"{self.base_name}_complex", "/complex/", iters)
 
 class GrpcClient():
     def __init__(self, port):
@@ -52,4 +53,4 @@ class GrpcClient():
         return self.get_benchmarks("grpc_simple", SimpleRequestInput(), self.client.SimpleRequest, iters)
 
     def benchmark_complex_req(self, iters = ITERATIONS):
-        return self.get_benchmarks("grpc_complex", ComplexRequestInput(), self.client,ComplexRequest, iters)
+        return self.get_benchmarks("grpc_complex", ComplexRequestInput(), self.client.ComplexRequest, iters)
