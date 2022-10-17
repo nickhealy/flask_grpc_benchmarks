@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package service;
+
+service Service {
+    rpc SimpleRequest (SimpleRequestInput) returns (SimpleRequestOutput) {};
+    rpc ComplexRequest (ComplexRequestInput) returns (ComplexRequestOutput) {};
+}
+
+
+message SimpleRequestInput {}
+
+message SimpleRequestOutput {
+    string message = 1;
+}
+
+message ComplexRequestInput {
+    int32 id = 1;
+}
+
+message ComplexRequestOutput {
+  int32 id = 1;
+  string email = 2;
+  string given_name = 3;
+  string family_name = 4;
+  string dob = 5;
+  string phone = 6;
+  int32 primary_account = 7;
+  bool colour_blind = 8;
+  string last_seen_legal_terms_sbk = 9;
+  string last_seen_legal_terms_exchange = 10;
+  bool mailing_list = 11;
+  bool show_backer_stake = 12;
+  bool bonus_eligible = 13;
+  string created = 14;
+  string last_modified = 15;
+  bool api_user = 16;
+  string last_seen_payment_terms_sbk = 17;
+  string last_seen_payment_terms_exchange = 18;
+  bool instant_bet = 19;
+  bool graphs_use_member_odds_format = 20;
+  string last_disabled_usage_alert = 21;
+  bool hide_balance = 22;
+  bool marketing_notification = 23;
+  bool bet_activity_notification = 24;
+  bool payment_status_notification = 25;
+  bool marketing_sms = 26;
+  string fullname = 27;
+  bool has_national_id = 28;
+  bool suspended = 29;
+  bool excluded = 30;
+  bool timeout = 31;
+  bool inactive = 32;
+  string country = 33;
+  bool has_password = 34;
+  string signup_ip_address = 35;
+  string fingerprint = 36;
+}
