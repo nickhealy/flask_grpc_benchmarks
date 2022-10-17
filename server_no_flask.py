@@ -1,25 +1,22 @@
-import http.server
-import socketserver
 import json
-from http import HTTPStatus
+from wsgiref.simple_server import make_server
 
-json_data = open('complex_response.json')
+complex_res = open('complex_response.json', 'r')
+complex_json = json.load(complex_res)
 
-class Handler(http.server.SimpleHTTPRequestHandler):
-    def __init__(self, request, client_address, server):
-        super().__init__(request, client_address, server)
+def application(environ, start_response):
 
-    def do_GET(self):
-        if self.path == '/simple/':
-            data = bytes('hello world'.encode())
-        else:
-            data = json.dumps(json_data)
-        self.send_response(HTTPStatus.OK)
-        self.end_headers()
-        self.wfile.write(data)
+    status = '200 OK'
+    headers = []
+    path = environ['PATH_INFO']
+    data = b'empty_response'
+    if path == '/simple/':
+        data =  b"Hello, World"
+    elif path == '/complex/':
+        data = bytes(json.dumps(complex_json), 'utf-8')
+        headers = [('Content-Type', 'application/json'), ('Content-Length', str(len(data)))]
+    start_response(status, headers)
+    return [data]
 
-if __name__ == "__main__":
-    PORT = 8001
-    server = socketserver.TCPServer(("localhost", PORT), Handler)
-    print(f"server started at {PORT}")
-    server.serve_forever()
+httpd = make_server('localhost', 8048, application)
+httpd.serve_forever()
