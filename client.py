@@ -6,7 +6,7 @@ from grpc_benchmark_pb2_grpc import ServiceStub
 from grpc_benchmark_pb2 import SimpleRequestInput, SimpleRequestOutput, ComplexRequestInput, ComplexRequestOutput
 
 WARMUPS = 10
-ITERATIONS = 1000
+ITERATIONS = 10000
 
 def get_latencies_after_x_iterations(name, cb, iterations):
     latencies = [name]
