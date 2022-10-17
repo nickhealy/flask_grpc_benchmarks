@@ -1,6 +1,9 @@
 # flask_grpc_benchmarks
 
-need to install `flask` and `orjson` 
+need to install `flask`, `orjson`, `grpc`, and `grpc-tools`
+
+generate protobufs
+`python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./grpc_benchmark.proto`
 
 open 4 terminals, run one of the following commands in each 
 
