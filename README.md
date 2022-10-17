@@ -9,7 +9,7 @@ open 4 terminals, run one of the following commands in each
 
 ```
 python3 grpc_server.py 
-python3 server_no_flask.py 
+gunicorn -b :8005 'server_no_flask:application'
 gunicorn -b :8000 'flask_server:create_app()
 gunicorn -b :8004 'flask_server:create_app(True)'
 ```
