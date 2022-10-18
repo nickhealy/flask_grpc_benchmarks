@@ -16,3 +16,5 @@ gunicorn -b :8004 'flask_server:create_app(True)'
 and then `python3 benchmark.py` 
 
 this will generate a `benchmarks.csv` file
+
+![GRPC vs Flask (1)](https://user-images.githubusercontent.com/57572409/196391097-d1155b29-800d-43f8-9e85-2bfd878f4d18.png)
